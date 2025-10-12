@@ -21,18 +21,16 @@ app = FastAPI(title="Aetheria API", version="1.0.0")
 api_router = APIRouter(prefix="/api")
 
 # Import route modules
-from routes import (
-    auth_routes,
-    assessment_routes,
-    dashboard_routes,
-    galactic_routes,
-    geometry_routes,
-    meditation_routes,
-    oracle_routes,
-    dna_routes,
-    subscription_routes,
-    intelligence_routes
-)
+from routes import auth_routes
+from routes import assessment_routes
+from routes import dashboard_routes
+from routes import galactic_routes
+from routes import geometry_routes
+from routes import meditation_routes
+from routes import oracle_routes
+from routes import dna_routes
+from routes import subscription_routes
+from routes import intelligence_routes
 
 # Health check endpoint
 @api_router.get("/")
