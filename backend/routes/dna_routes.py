@@ -3,18 +3,15 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime
 import uuid
 from models import User, DNASequence, DNAActivation
-from auth import get_current_user
 
 router = APIRouter(prefix="/dna", tags=["dna"])
 
-def get_db():
-    from server import db
-    return db
+from dependencies import get_db, get_current_user
 
 @router.get("/sequences")
 async def get_dna_sequences(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get DNA activation sequences for current user"""
     # Check subscription tier (Cosmic required)
@@ -61,7 +58,7 @@ async def get_dna_sequences(
 async def activate_dna_sequence(
     activation: DNAActivation,
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Activate a DNA sequence"""
     # Check subscription tier

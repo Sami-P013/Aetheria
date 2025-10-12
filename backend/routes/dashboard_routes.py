@@ -1,19 +1,16 @@
 from fastapi import APIRouter, Depends
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from models import User, DashboardStats
-from auth import get_current_user
 import random
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 
-def get_db():
-    from server import db
-    return db
+from dependencies import get_db, get_current_user
 
 @router.get("/stats", response_model=DashboardStats)
 async def get_dashboard_stats(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get dashboard statistics for current user"""
     # Get meditation sessions count
@@ -40,7 +37,7 @@ async def get_dashboard_stats(
 @router.get("/achievements")
 async def get_achievements(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get user achievements"""
     meditation_count = await db.meditation_sessions.count_documents({"user_id": current_user.id})

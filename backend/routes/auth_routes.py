@@ -3,13 +3,10 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime, timedelta
 import uuid
 from models import UserCreate, UserLogin, Token, User, UserInDB
-from auth import get_password_hash, verify_password, create_access_token, get_current_user
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
 
-def get_db():
-    from server import db
-    return db
+from dependencies import get_db, get_current_user
 
 @router.post("/signup", response_model=Token, status_code=status.HTTP_201_CREATED)
 async def signup(user: UserCreate, db: AsyncIOMotorDatabase = Depends(get_db)):
@@ -84,8 +81,7 @@ async def login(credentials: UserLogin, db: AsyncIOMotorDatabase = Depends(get_d
 
 async def get_current_user_with_db(token: str = Depends(auth.oauth2_scheme)):
     \"\"\"Dependency to get current user with database\"\"\"
-    from auth import get_current_user
-    db = get_db()
+        db = get_db()
     return await get_current_user(token, db)
 
 @router.get("/me", response_model=User)

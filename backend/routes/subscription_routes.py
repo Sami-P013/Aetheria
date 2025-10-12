@@ -4,7 +4,6 @@ from datetime import datetime
 import os
 import stripe
 from models import User, SubscriptionInfo, CreateCheckoutSession, CheckoutSessionResponse
-from auth import get_current_user
 
 router = APIRouter(prefix="/subscriptions", tags=["subscriptions"])
 
@@ -17,14 +16,12 @@ TIER_PRICES = {
     "cosmic": "price_cosmic"      # Replace with actual Stripe Price ID
 }
 
-def get_db():
-    from server import db
-    return db
+from dependencies import get_db, get_current_user
 
 @router.get("/current", response_model=SubscriptionInfo)
 async def get_current_subscription(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get current subscription information"""
     return SubscriptionInfo(
@@ -37,7 +34,7 @@ async def get_current_subscription(
 async def create_checkout_session(
     checkout_data: CreateCheckoutSession,
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Create a Stripe checkout session for subscription upgrade"""
     try:
@@ -160,7 +157,7 @@ async def stripe_webhook(
 @router.post("/cancel")
 async def cancel_subscription(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Cancel current subscription"""
     if not current_user.stripe_customer_id:

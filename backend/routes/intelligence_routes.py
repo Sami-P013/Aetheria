@@ -1,18 +1,15 @@
 from fastapi import APIRouter, Depends
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from models import User
-from auth import get_current_user
 
 router = APIRouter(prefix="/intelligence", tags=["intelligence"])
 
-def get_db():
-    from server import db
-    return db
+from dependencies import get_db, get_current_user
 
 @router.get("/insights")
 async def get_intelligence_insights(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get advanced cross-module insights from the intelligence engine"""
     # Get all user data
@@ -84,7 +81,7 @@ async def get_intelligence_insights(
 @router.post("/analyze")
 async def trigger_deep_analysis(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Trigger a deep analysis of all user data"""
     # Check subscription tier (Cosmic required)

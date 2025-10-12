@@ -3,19 +3,16 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime
 import uuid
 from models import User, MeditationSession, MeditationSessionCreate
-from auth import get_current_user
 
 router = APIRouter(prefix="/meditation", tags=["meditation"])
 
-def get_db():
-    from server import db
-    return db
+from dependencies import get_db, get_current_user
 
 @router.post("/session", response_model=MeditationSession)
 async def create_meditation_session(
     session: MeditationSessionCreate,
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Create a new meditation session record"""
     session_id = str(uuid.uuid4())
@@ -37,7 +34,7 @@ async def create_meditation_session(
 @router.get("/history")
 async def get_meditation_history(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get meditation session history for current user"""
     sessions = await db.meditation_sessions.find(
@@ -50,7 +47,7 @@ async def get_meditation_history(
 @router.get("/stats")
 async def get_meditation_stats(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get meditation statistics for current user"""
     sessions = await db.meditation_sessions.find({"user_id": current_user.id}, {"_id": 0}).to_list(1000)

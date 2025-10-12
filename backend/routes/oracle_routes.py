@@ -5,21 +5,18 @@ import uuid
 import os
 import requests
 from models import User, OracleQuery, OracleResponse
-from auth import get_current_user
 
 router = APIRouter(prefix="/oracle", tags=["oracle"])
 
 EMERGENT_LLM_KEY = os.getenv("EMERGENT_LLM_KEY", "sk-emergent-5967a25Cc2c2dFd52F")
 
-def get_db():
-    from server import db
-    return db
+from dependencies import get_db, get_current_user
 
 @router.post("/query", response_model=OracleResponse)
 async def query_cosmic_oracle(
     query: OracleQuery,
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Query the Cosmic Oracle for spiritual guidance"""
     # Check subscription tier (Premium or Cosmic required)
@@ -94,7 +91,7 @@ async def query_cosmic_oracle(
 @router.get("/history")
 async def get_oracle_history(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get oracle query history for current user"""
     queries = await db.oracle_queries.find(

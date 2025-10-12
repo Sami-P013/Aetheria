@@ -4,18 +4,15 @@ from datetime import datetime
 import uuid
 from typing import Dict
 from models import User, GalacticProfile
-from auth import get_current_user
 
 router = APIRouter(prefix="/galactic", tags=["galactic"])
 
-def get_db():
-    from server import db
-    return db
+from dependencies import get_db, get_current_user
 
 @router.get("/profile", response_model=GalacticProfile)
 async def get_galactic_profile(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get galactic heritage profile for current user"""
     profile_doc = await db.galactic_profiles.find_one({"user_id": current_user.id}, {"_id": 0})
@@ -29,7 +26,7 @@ async def get_galactic_profile(
 async def save_galactic_assessment(
     assessment_data: Dict,
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Save galactic origin assessment results"""
     now = datetime.utcnow()
@@ -108,7 +105,7 @@ async def save_galactic_assessment(
 @router.get("/map-data")
 async def get_galactic_map_data(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get data for the galactic map visualization"""
     profile_doc = await db.galactic_profiles.find_one({"user_id": current_user.id}, {"_id": 0})

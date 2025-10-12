@@ -3,18 +3,15 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime
 import uuid
 from models import User, GeometryPattern, GeometryPatternCreate
-from auth import get_current_user
 
 router = APIRouter(prefix="/geometry", tags=["geometry"])
 
-def get_db():
-    from server import db
-    return db
+from dependencies import get_db, get_current_user
 
 @router.get("/patterns")
 async def get_geometry_patterns(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get all geometry patterns for current user"""
     patterns = await db.geometry_patterns.find({"user_id": current_user.id}, {"_id": 0}).to_list(100)
@@ -24,7 +21,7 @@ async def get_geometry_patterns(
 async def create_geometry_pattern(
     pattern: GeometryPatternCreate,
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Create a new geometry pattern"""
     pattern_id = str(uuid.uuid4())
@@ -46,7 +43,7 @@ async def create_geometry_pattern(
 @router.get("/assessment")
 async def get_geometry_assessment(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get personal geometry assessment results"""
     assessment_doc = await db.assessments.find_one({"user_id": current_user.id}, {"_id": 0})

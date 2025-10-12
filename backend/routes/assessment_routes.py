@@ -3,18 +3,15 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from typing import Dict, Any
 from datetime import datetime
 from models import User, AssessmentUpdate, AssessmentResponse
-from auth import get_current_user
 
 router = APIRouter(prefix="/assessments", tags=["assessments"])
 
-def get_db():
-    from server import db
-    return db
+from dependencies import get_db, get_current_user
 
 @router.get("/all", response_model=AssessmentResponse)
 async def get_all_assessments(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get all assessments for current user"""
     assessment_doc = await db.assessments.find_one({"user_id": current_user.id}, {"_id": 0})
@@ -44,7 +41,7 @@ async def get_all_assessments(
 @router.get("/progress")
 async def get_assessment_progress(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get assessment progress statistics"""
     assessment_doc = await db.assessments.find_one({"user_id": current_user.id}, {"_id": 0})
@@ -71,7 +68,7 @@ async def get_assessment_progress(
 async def update_assessment(
     assessment: AssessmentUpdate,
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Update or create assessment for a dimension"""
     now = datetime.utcnow()
@@ -113,7 +110,7 @@ async def update_assessment(
 @router.get("/insights")
 async def get_insights(
     db: AsyncIOMotorDatabase = Depends(get_db),
-    current_user: User = Depends(lambda token, db=get_db(): get_current_user(token, db))
+    current_user: User = Depends(get_current_user)
 ):
     """Get cross-module insights based on completed assessments"""
     assessment_doc = await db.assessments.find_one({"user_id": current_user.id}, {"_id": 0})
