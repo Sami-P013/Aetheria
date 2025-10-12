@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 import os
-from .models import TokenData, User, UserInDB
+from models import TokenData, User, UserInDB
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 # Configuration
