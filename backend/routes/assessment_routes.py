@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from typing import Dict, Any
 from datetime import datetime
-from ..models import User, AssessmentUpdate, AssessmentResponse
-from ..auth import get_current_user
+from models import User, AssessmentUpdate, AssessmentResponse
+from auth import get_current_user
 
 router = APIRouter(prefix="/assessments", tags=["assessments"])
 
 def get_db():
-    from ..server import db
+    from server import db
     return db
 
 @router.get("/all", response_model=AssessmentResponse)

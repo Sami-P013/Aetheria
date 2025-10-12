@@ -3,8 +3,8 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime
 import os
 import stripe
-from ..models import User, SubscriptionInfo, CreateCheckoutSession, CheckoutSessionResponse
-from ..auth import get_current_user
+from models import User, SubscriptionInfo, CreateCheckoutSession, CheckoutSessionResponse
+from auth import get_current_user
 
 router = APIRouter(prefix="/subscriptions", tags=["subscriptions"])
 
@@ -18,7 +18,7 @@ TIER_PRICES = {
 }
 
 def get_db():
-    from ..server import db
+    from server import db
     return db
 
 @router.get("/current", response_model=SubscriptionInfo)

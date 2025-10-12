@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime
 import uuid
-from ..models import User, GeometryPattern, GeometryPatternCreate
-from ..auth import get_current_user
+from models import User, GeometryPattern, GeometryPatternCreate
+from auth import get_current_user
 
 router = APIRouter(prefix="/geometry", tags=["geometry"])
 
 def get_db():
-    from ..server import db
+    from server import db
     return db
 
 @router.get("/patterns")

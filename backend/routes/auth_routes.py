@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime, timedelta
 import uuid
-from ..models import UserCreate, UserLogin, Token, User, UserInDB
-from ..auth import get_password_hash, verify_password, create_access_token, get_current_user
+from models import UserCreate, UserLogin, Token, User, UserInDB
+from auth import get_password_hash, verify_password, create_access_token, get_current_user
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
 
 def get_db():
-    from ..server import db
+    from server import db
     return db
 
 @router.post("/signup", response_model=Token, status_code=status.HTTP_201_CREATED)

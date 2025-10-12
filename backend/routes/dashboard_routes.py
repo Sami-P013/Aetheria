@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends
 from motor.motor_asyncio import AsyncIOMotorDatabase
-from ..models import User, DashboardStats
-from ..auth import get_current_user
+from models import User, DashboardStats
+from auth import get_current_user
 import random
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 
 def get_db():
-    from ..server import db
+    from server import db
     return db
 
 @router.get("/stats", response_model=DashboardStats)

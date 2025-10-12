@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime
 import uuid
-from ..models import User, MeditationSession, MeditationSessionCreate
-from ..auth import get_current_user
+from models import User, MeditationSession, MeditationSessionCreate
+from auth import get_current_user
 
 router = APIRouter(prefix="/meditation", tags=["meditation"])
 
 def get_db():
-    from ..server import db
+    from server import db
     return db
 
 @router.post("/session", response_model=MeditationSession)

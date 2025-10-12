@@ -3,13 +3,13 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime
 import uuid
 from typing import Dict
-from ..models import User, GalacticProfile
-from ..auth import get_current_user
+from models import User, GalacticProfile
+from auth import get_current_user
 
 router = APIRouter(prefix="/galactic", tags=["galactic"])
 
 def get_db():
-    from ..server import db
+    from server import db
     return db
 
 @router.get("/profile", response_model=GalacticProfile)

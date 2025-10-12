@@ -4,15 +4,15 @@ from datetime import datetime
 import uuid
 import os
 import requests
-from ..models import User, OracleQuery, OracleResponse
-from ..auth import get_current_user
+from models import User, OracleQuery, OracleResponse
+from auth import get_current_user
 
 router = APIRouter(prefix="/oracle", tags=["oracle"])
 
 EMERGENT_LLM_KEY = os.getenv("EMERGENT_LLM_KEY", "sk-emergent-5967a25Cc2c2dFd52F")
 
 def get_db():
-    from ..server import db
+    from server import db
     return db
 
 @router.post("/query", response_model=OracleResponse)
