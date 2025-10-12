@@ -82,8 +82,13 @@ async def login(credentials: UserLogin, db: AsyncIOMotorDatabase = Depends(get_d
     
     return Token(access_token=access_token, user=user_response)
 
+async def get_current_user_with_db(token: str = Depends(auth.oauth2_scheme)):
+    \"\"\"Dependency to get current user with database\"\"\"
+    from auth import get_current_user
+    db = get_db()
+    return await get_current_user(token, db)
+
 @router.get("/me", response_model=User)
-async def get_me(db: AsyncIOMotorDatabase = Depends(get_db), current_user: User = Depends(get_current_user)):
+async def get_me(current_user: User = Depends(get_current_user_with_db)):
     """Get current user information"""
-    # Pass db to get_current_user if needed
     return current_user
