@@ -1,0 +1,400 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* Aetheria Optimized Cosmic Theme */
+:root {
+  --radius: 0.75rem;
+  
+  /* Cosmic Background */
+  --background: #0a0a0f;
+  --foreground: #ffffff;
+  
+  /* Cards and Surfaces */
+  --card: rgba(255, 255, 255, 0.05);
+  --card-foreground: #ffffff;
+  --popover: rgba(255, 255, 255, 0.08);
+  --popover-foreground: #ffffff;
+  
+  /* Primary Colors */
+  --primary: #8b5cf6;
+  --primary-foreground: #ffffff;
+  
+  /* Secondary Colors */
+  --secondary: rgba(255, 255, 255, 0.1);
+  --secondary-foreground: #ffffff;
+  
+  /* Muted Colors */
+  --muted: rgba(255, 255, 255, 0.05);
+  --muted-foreground: #a1a1aa;
+  
+  /* Accent Colors */
+  --accent: rgba(139, 92, 246, 0.2);
+  --accent-foreground: #ffffff;
+  
+  /* Borders and Inputs */
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.05);
+  --ring: #8b5cf6;
+  
+  /* Destructive */
+  --destructive: #ef4444;
+  
+  /* Charts */
+  --chart-1: #8b5cf6;
+  --chart-2: #06b6d4;
+  --chart-3: #10b981;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+    min-height: 100vh;
+  }
+  
+  /* Optimized Cosmic Background Pattern - Static */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 40%),
+      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.2) 0%, transparent 40%),
+      radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.15) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+/* Optimized Cosmic Gradient Text - Hover Only Animation */
+.cosmic-gradient-text {
+  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 100%;
+  transition: background-position 0.3s ease;
+}
+
+.cosmic-gradient-text:hover {
+  background-position: 100% 0%;
+}
+
+/* Optimized Glassmorphism - Reduced Blur */
+.ultra-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Optimized Premium Button */
+.premium-button {
+  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.premium-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+/* Optimized Cosmic Particles - Reduced Count and Simplified Animation */
+.cosmic-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: gentle-float 8s ease-in-out infinite;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.cosmic-particle.purple {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.6) 0%, rgba(139, 92, 246, 0.1) 70%, transparent 100%);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+}
+
+.cosmic-particle.blue {
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.6) 0%, rgba(6, 182, 212, 0.1) 70%, transparent 100%);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+}
+
+.cosmic-particle.gold {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.6) 0%, rgba(245, 158, 11, 0.1) 70%, transparent 100%);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+/* Simplified Float Animation */
+@keyframes gentle-float {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-15px);
+    opacity: 0.8;
+  }
+}
+
+/* Optimized Floating Navigation */
+.floating-nav {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2rem;
+  z-index: 50;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.floating-nav-item {
+  padding: 0.75rem;
+  border-radius: 1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floating-nav-item:hover {
+  background: rgba(139, 92, 246, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Optimized Scroll Animations - Reduced Motion */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Performance Optimizations */
+@media (max-width: 768px) {
+  .cosmic-particle {
+    display: none; /* Hide particles on mobile for performance */
+  }
+  
+  .ultra-glass {
+    backdrop-filter: blur(8px); /* Reduce blur on mobile */
+  }
+  
+  .floating-nav {
+    bottom: 1rem;
+    padding: 0.5rem;
+    gap: 0.25rem;
+  }
+  
+  .floating-nav-item {
+    padding: 0.5rem;
+  }
+}
+
+/* Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-particle {
+    animation: none;
+    opacity: 0.4;
+  }
+  
+  .cosmic-gradient-text {
+    animation: none;
+  }
+  
+  .fade-in-up {
+    animation: none;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Focus States for Accessibility */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .ultra-glass {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .cosmic-gradient-text {
+    background: #ffffff;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+    color: #ffffff;
+  }
+}
+
+/* Clean, Eye-Catching Design Priorities */
+.clean-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: border-color 0.2s ease;
+}
+
+.clean-card:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.bright-accent {
+  color: #8b5cf6;
+  font-weight: 600;
+}
+
+.pop-color-purple { color: #a855f7; }
+.pop-color-pink { color: #ec4899; }
+.pop-color-blue { color: #06b6d4; }
+.pop-color-gold { color: #f59e0b; }
+
+/* Informative Typography */
+.info-text {
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.info-text strong {
+  color: #8b5cf6;
+  font-weight: 600;
+}
+
+/* Simple, Clean Interactions */
+.simple-button {
+  background: transparent;
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  color: #8b5cf6;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.simple-button:hover {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: #8b5cf6;
+}
+
+/* Cosmic Loader */
+.cosmic-loader {
+  width: 60px;
+  height: 60px;
+  border: 3px solid transparent;
+  border-top: 3px solid #8b5cf6;
+  border-right: 3px solid #ec4899;
+  border-radius: 50%;
+  animation: cosmic-spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes cosmic-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #9333ea, #f472b6);
+}
+
+/* Selection */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: white;
+}
+
+/* Smooth Transitions */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
