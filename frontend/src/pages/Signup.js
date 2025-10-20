@@ -22,16 +22,13 @@ const Signup = () => {
 
     try {
       await signup(email, password, fullName);
-      toast({
-        title: 'Welcome to Aetheria!',
+      toast.success('Welcome to Aetheria!', {
         description: 'Your cosmic journey begins now.',
       });
       navigate('/dashboard');
     } catch (error) {
-      toast({
-        title: 'Signup failed',
+      toast.error('Signup failed', {
         description: error.response?.data?.detail || 'Unable to create account. Please try again.',
-        variant: 'destructive',
       });
     } finally {
       setLoading(false);
