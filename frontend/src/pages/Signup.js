@@ -89,7 +89,7 @@ const Signup = () => {
                 type="password"
                 placeholder="••••••••"
                 value={password}
-                onChange={(e) => setPassword(e.target.value);
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={8}
                 className="bg-white/5 border-white/10 text-white placeholder:text-white/40"
