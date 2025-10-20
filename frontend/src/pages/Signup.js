@@ -6,7 +6,7 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Sparkles } from 'lucide-react';
-import { useToast } from '../hooks/use-toast';
+import { toast } from '../components/ui/sonner';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
