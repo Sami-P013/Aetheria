@@ -1,34 +1,113 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Cosmic Background Animations */
+.stars {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: 1779px 324px #FFF, 1481px 1414px #FFF, 1193px 628px #FFF, 
+    1768px 1191px #FFF, 1369px 1019px #FFF, 579px 1333px #FFF, 
+    1184px 452px #FFF, 1404px 1393px #FFF, 1867px 948px #FFF;
+  animation: animStar 100s linear infinite;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.stars:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: 1779px 324px #FFF, 1481px 1414px #FFF, 1193px 628px #FFF, 
+    1768px 1191px #FFF, 1369px 1019px #FFF, 579px 1333px #FFF, 
+    1184px 452px #FFF, 1404px 1393px #FFF, 1867px 948px #FFF;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.stars2 {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: 779px 1324px #FFF, 481px 414px #FFF, 193px 1628px #FFF, 
+    768px 191px #FFF, 369px 1019px #FFF, 1579px 333px #FFF, 
+    1184px 1452px #FFF, 404px 393px #FFF, 867px 1948px #FFF;
+  animation: animStar 150s linear infinite;
 }
 
-.App-link {
-    color: #61dafb;
+.stars2:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: 779px 1324px #FFF, 481px 414px #FFF, 193px 1628px #FFF, 
+    768px 191px #FFF, 369px 1019px #FFF, 1579px 333px #FFF, 
+    1184px 1452px #FFF, 404px 393px #FFF, 867px 1948px #FFF;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.stars3 {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: 1279px 824px rgba(168, 85, 247, 0.5), 981px 914px rgba(236, 72, 153, 0.5), 
+    693px 128px rgba(59, 130, 246, 0.5), 268px 691px rgba(168, 85, 247, 0.5), 
+    869px 519px rgba(236, 72, 153, 0.5), 79px 833px rgba(59, 130, 246, 0.5);
+  animation: animStar 200s linear infinite;
+}
+
+.stars3:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: 1279px 824px rgba(168, 85, 247, 0.5), 981px 914px rgba(236, 72, 153, 0.5), 
+    693px 128px rgba(59, 130, 246, 0.5), 268px 691px rgba(168, 85, 247, 0.5), 
+    869px 519px rgba(236, 72, 153, 0.5), 79px 833px rgba(59, 130, 246, 0.5);
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars,
+  .stars2,
+  .stars3 {
+    animation: none;
+  }
+}
+
+/* Glassmorphism effect */
+.glass-card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
