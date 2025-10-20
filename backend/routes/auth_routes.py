@@ -3,6 +3,7 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from datetime import datetime, timedelta
 import uuid
 from models import UserCreate, UserLogin, Token, User, UserInDB
+from auth import get_password_hash, verify_password, create_access_token
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
 
